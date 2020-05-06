@@ -14,4 +14,5 @@ Procura Heurística:
 
 
 #Enunciado
+
 Os requisitos e enunciado do trabalho prático estão disponíveis em [TrabalhoFinal](https://pages.github.com/).

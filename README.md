@@ -14,4 +14,4 @@ Procura Heurística:
 
 
 ## Enunciado
-Os requisitos e enunciado do trabalho prático estão disponíveis em [TrabalhoFinal](https://pages.github.com/).
+Os requisitos e enunciado do trabalho prático estão disponíveis em [TrabalhoFinal](https://github.com/RicardoMartins07/AI-Search-Algorithms/blob/master/Trabalho%20Pr%C3%A1tico%20Final.pdf).

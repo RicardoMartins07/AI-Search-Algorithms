@@ -56,23 +56,37 @@ class utils:
             print('Error: Keys not exists!!')
             
         else:
+
+            #Initialize queu
             queue = PriorityQueue()
 
+            #Get the Successors of the nodeStart
             keys_successors = graph.getSuccessors(nodeStart)
 
+            #Loop through the list of Successors an insert in queue((NameNode,Weight),weight)
             for key_successor in keys_successors:
                 weight = graph.getWeightEdge(nodeStart,key_successor)
                 queue.insert((key_successor,weight),weight)
             
+            #Initialize goal and cost_goal to ensure when reach the goal node and keep the cost
             goal , cost_goal = False,-1
+
+            # Loop until you find the end
             while not queue.is_empty():
+
+                # Get the current node
                 key_current_node, cost_node = queue.remove()
+                
+                #Check if the goal has been reachead 
                 if(key_current_node == nodeGoal):
                     goal,cost_goal=True,cost_node
                     break
+
+                #Tell the user the node that we are Expanding
                 if verbose:
                     print('\nExpanding node \'%s\' with cost %s ...' % (key_current_node,cost_node))
                 
+                #Get the Successors of the Current node
                 keys_successors = graph.getSuccessors(key_current_node)
 
                 if keys_successors:
@@ -80,6 +94,7 @@ class utils:
                         cost_goal1 = graph.getWeightEdge(key_current_node,key_successor) + cost_node
                         queue.insert((key_successor,cost_goal1),cost_goal1)
             
+            #If we reached the goal
             if(goal):
                 print('\nGoal reached! Cost: %s' %cost_goal)
                 print('Source: %s' %nodeStart)

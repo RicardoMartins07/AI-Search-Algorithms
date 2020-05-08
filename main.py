@@ -1,4 +1,3 @@
-
 from graph import *
 from utils import *
 import sys
@@ -39,14 +38,19 @@ class main:
         funcUtils = utils()
         funcUtils.read_file_first_space('Cidades_grafo.txt',graph)
         funcUtils.read_file_and_connect('Cidades_grafo.txt',graph)
-        funcUtils.uniform_cost_search_util(graph,'Lisboa','Viseu',verbose=True)
+        nodeStart = input("What is the source node?\n")
+        nodeGoal = input("What is the goal node?\n")
+        funcUtils.uniform_cost_search_util(graph,nodeStart.capitalize(),nodeGoal.capitalize(),verbose=True)
     
     def depth_Limited_Search(self):
         graph = Graph()
         funcUtils = utils()
         funcUtils.read_file_first_space('Cidades_grafo.txt',graph)
         funcUtils.read_file_and_connect('Cidades_grafo.txt',graph)
-        funcUtils.depth_Limited_Search_util(graph,'Lisboa','Viseu',10)
+        nodeStart = input("What is the source node?\n")
+        nodeGoal = input("What is the goal node?\n")
+        limit = input("what is the limit?\n")
+        funcUtils.depth_Limited_Search_util(graph,nodeStart.capitalize(),nodeGoal.capitalize(),limit)
 
     def A_Star_Search(self):
         graph = Graph()
@@ -55,7 +59,8 @@ class main:
         funcUtils.read_file_and_connect('Cidades_grafo.txt',graph)
         heuristics = {}
         funcUtils.create_heuristics('Cidades_Faro.txt',heuristics)
-        funcUtils.A_Star_Search_util(graph,heuristics,'Viseu','Faro')
+        nodeStart = input("What is the source node?\n")
+        funcUtils.A_Star_Search_util(graph,heuristics,nodeStart.capitalize(),'Faro')
     
     def Greedy_Search(self):
         graph = Graph()
@@ -64,7 +69,8 @@ class main:
         funcUtils.read_file_and_connect('Cidades_grafo.txt',graph)
         heuristics = {}
         funcUtils.create_heuristics('Cidades_Faro.txt',heuristics)
-        funcUtils.Greedy_Search_util(graph,heuristics,'Viseu','Faro')
+        nodeStart = input("What is the source node?\n")
+        funcUtils.Greedy_Search_util(graph,heuristics,nodeStart.capitalize(),'Faro')
         
         
 mainprogram = main()

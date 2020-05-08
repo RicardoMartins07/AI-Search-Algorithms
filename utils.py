@@ -31,7 +31,7 @@ class utils:
             heuristics[conteudo[0]]= int(conteudo[2])
         ficheiro.close()
     
-
+    # Check if a neighbor should be added to open list
     def add_to_open(self,open_list, neighbor):
         for node in open_list:
             if (neighbor == node and neighbor.f > node.f):
@@ -51,8 +51,10 @@ class utils:
 
 
     def uniform_cost_search_util(self,graph,nodeStart,nodeGoal,verbose=False):
+        #Check if both nodes exists
         if nodeStart not in graph.getNodes() or nodeGoal not in graph.getNodes():
             print('Error: Keys not exists!!')
+            
         else:
             queue = PriorityQueue()
 
@@ -90,34 +92,59 @@ class utils:
         
 
     def depth_Limited_Search_util(self,graph,nodeStart,nodeGoal,limit):
+        #Check if both nodes exists
         if nodeStart not in graph.getNodes() or nodeGoal not in graph.getNodes():
             print('Error: Keys not exists!!')
         else:
+            
+            # Initialize mystack,visited and aux list
             myStack = []
             visitedList = []
             aux = []
+            
+            # Add the start node and initialize depth
             myStack.append(nodeStart)
             depth = 0
+
+            # Loop until you find the end
             while len(myStack) > 0:
-                if(depth <= limit):
+
+                #if depth <= limit requested by user
+                if(depth <= int(limit)):
+
+                    # Get the current node
                     current = myStack.pop()
+
+                    #Check if node isn't in visitedList
                     if current not in visitedList:
+
+                        #Found the goal
                         if current.__eq__(nodeGoal):
                             print("Goal Node found!!")
                             print("================== Visited List ================")
                             print(visitedList)
                             return
+
                         else:
+                            #Add the current node
+                            print("Depth = %s in limit of %s" %(depth,limit))
                             visitedList.append(current)
                             aux = graph.getSuccessors(current)
                             i = len(aux)-1
+                        
                         while i > 0:
+                            #Add the Successors of the current node
                             myStack.append(aux[i])
                             i-=1
                         depth +=1
+
                     else:
+                        #If current already in the visitedList Jump for another node
+                        #If this line is ignored it will make a infinite loop
+                        print("Depth = %s in limit of %s" %(depth,limit))
                         myStack.pop()
                 else:
+                    #Goal node not found
                     print("Goal Node not found within depth limit")
                     return
 
@@ -130,7 +157,7 @@ class utils:
         else:
 
             # Initialize both open and closed list
-           
+            i=1
             open_list = []
             closed_list = []
 
@@ -150,6 +177,9 @@ class utils:
                 open_list.sort(key=lambda Node: Node.f)
                 current_node = open_list.pop(0)
                 closed_list.append(current_node)
+
+                if i > 1:
+                    print('\nI will choose %s because has the lowest cost f= %s\n' % (current_node.key,current_node.f))
                 
                 # Found the goal
                 if current_node.key.__eq__(goal_node.key):
@@ -160,7 +190,7 @@ class utils:
             
                 # Get neighbours
                 neighbors = graph.getSuccessors(current_node.key)
-            
+                print ("============== Iteration nº %s ===============" %i)
                 # Loop neighbors
                 for key in neighbors:
 
@@ -177,11 +207,14 @@ class utils:
                     neighbor.g = graph.getWeightEdge(current_node.key,neighbor.key)
                     neighbor.h = heuristics.get(neighbor.key)
                     neighbor.f = neighbor.g + neighbor.h
+                    print('\nNode:\'%s\' with g= %s  h= %s f= %s ' % (neighbor.key,neighbor.g,neighbor.h,neighbor.f))
+
 
                     # Check if neighbor is in open list and if it has a lower f value
                     if(self.add_to_open(open_list, neighbor) == True):
                         # Everything is green, add neighbor to open list
                         open_list.append(neighbor)
+                i+=1
         
             print("No path Found")
     
@@ -193,7 +226,7 @@ class utils:
         else:
 
             # Initialize both open and closed list
-           
+            i=1
             open_list = []
             closed_list = []
 
@@ -208,11 +241,13 @@ class utils:
             # Loop until you find the end
             while len(open_list) > 0:
 
-                
+
                 # Get the current node
                 open_list.sort(key=lambda Node: Node.f)
                 current_node = open_list.pop(0)
                 closed_list.append(current_node)
+                if i > 1:
+                    print('\nI will choose %s because has the lowest cost f= %s\n' % (current_node.key,current_node.f))
                 
                 # Found the goal
                 if current_node.key.__eq__(goal_node.key):
@@ -224,7 +259,7 @@ class utils:
             
                 # Get neighbours
                 neighbors = graph.getSuccessors(current_node.key)
-            
+                print ("============== Iteration nº %s ===============" %i)
                 # Loop neighbors
                 for key in neighbors:
 
@@ -240,11 +275,13 @@ class utils:
                     # Calculate full path cost
                     neighbor.h = heuristics.get(neighbor.key)
                     neighbor.f = neighbor.h
+                    print('\nNode:\'%s\' with  h= %s f= %s ' % (neighbor.key,neighbor.h,neighbor.f))
 
                     # Check if neighbor is in open list and if it has a lower f value
                     if(self.add_to_open(open_list, neighbor) == True):
                         # Everything is green, add neighbor to open list
                         open_list.append(neighbor)
+                i+=1
         
             print("No path Found")
    
